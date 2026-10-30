@@ -1,0 +1,34 @@
+<!DOCTYPE<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}UniSchedule Sync{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-scene"></div>
+
+    <header class="topbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="brand" href="{{ url_for('index') }}">UniSchedule Sync</a>
+            {% if session.get('credentials') %}
+                <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} fade-in">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

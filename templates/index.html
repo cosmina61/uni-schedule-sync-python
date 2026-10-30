@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+
+        {% if not logged_in %}
+            <!-- ECRANUL DE LOGIN -->
+            <div class="card-ui text-center fade-in">
+                <h2 class="page-title">Bun venit în UniSchedule Sync</h2>
+                <p class="muted">Încarcă orarul din Excel și sincronizează-l direct în Google Calendar, cu vacanța exclusă automat.</p>
+                <a href="{{ url_for('login') }}" class="btn btn-accent btn-lg mt-3">Conectează-te cu Google</a>
+            </div>
+
+        {% elif not session.get('synced') %}
+            <!-- FORMULARUL -->
+            <div class="card-ui fade-in">
+                <h3 class="page-title">Sincronizează orarul</h3>
+                <p class="muted mb-4">Completează datele și apasă Preview. Vei vedea orele înainte de sincronizare.</p>
+
+                <form action="{{ url_for('preview') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Calendarul țintă</label>
+                        <select name="calendar_id" class="form-select" required>
+                            <option value="" disabled selected>Alege un calendar...</option>
+                            {% for cal in calendars %}
+                                <option value="{{ cal.id }}">{{ cal.summary }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Fișierul Excel cu orarul (.xlsx)</label>
+                        <input type="file" name="schedule_file" class="form-control" accept=".xlsx,.xls" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Începutul și finalul semestrului</label>
+                        <div class="row g-2">
+                            <div class="col">
+                                <input type="date" name="semester_start" class="form-control">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="semester_end" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Vacanța (datele excluse)</label>
+                        <div class="row g-2">
+                            <div class="col">
+                                <input type="date" name="holiday_start" class="form-control">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="holiday_end" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Grupa (opțional)</label>
+                        <input type="text" name="student_group" class="form-control" placeholder="ex. 422E, 423Eb">
+                        <small class="muted">Dacă fișierul are mai multe grupe, scrie-o pe a ta ca să filtrezi orele.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-accent w-100">Preview și sincronizare</button>
+                </form>
+            </div>
+
+        {% else %}
+            <!-- REZULTATUL, după un sync reușit -->
+            <div class="card-ui text-center fade-in">
+                <h3 class="page-title">Orarul este în calendar</h3>
+                <p class="muted">Evenimentele au fost create. Poți să le ștergi sau să încarci alt orar.</p>
+
+                <div class="d-flex justify-content-center gap-2 mt-4">
+                    <a href="{{ url_for('new_schedule') }}" class="btn btn-outline-secondary">Încarcă alt orar</a>
+                    <form action="{{ url_for('reset') }}" method="POST"
+                          onsubmit="return confirm('Ștergi TOATE evenimentele create de aplicație, din toate grupele și calendarele? Evenimentele tale personale nu sunt afectate.');">
+                        <button type="submit" class="btn btn-outline-danger">Resetează tot</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

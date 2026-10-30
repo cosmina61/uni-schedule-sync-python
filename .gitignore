@@ -1,0 +1,6 @@
+client_secret.json
+sync_cache/
+__pycache__/
+venv/
+.env 
+

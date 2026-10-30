@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Previzualizare · UniSchedule Sync{% endblock %}
+
+{% block content %}
+<div class="card-ui fade-in">
+    <h3 class="page-title">Previzualizare orar</h3>
+    <p class="muted">Verifică orele înainte să le trimiți în Google Calendar.</p>
+
+    <div class="table-wrap my-3">
+        <table class="table table-ui table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>An</th>
+                    <th>Ziua</th>
+                    <th>Ora</th>
+                    <th>Săptămâna</th>
+                    <th>Conținut</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in classes %}
+                <tr>
+                    <td>{{ c.Year }}</td>
+                    <td>{{ c.Day }}</td>
+                    <td>{{ c.Hour }}</td>
+                    <td><span class="badge bg-secondary">{{ c.Week }}</span></td>
+                    <td>{{ c.Content }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="muted text-center py-4">Nu am găsit ore pentru această grupă.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Înapoi</a>
+        <form action="{{ url_for('sync') }}" method="POST">
+            <button type="submit" class="btn btn-accent">Sincronizează cu Google Calendar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

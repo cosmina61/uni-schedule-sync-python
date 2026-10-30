@@ -1,0 +1,177 @@
+:root {
+    --accent: #7432FF;
+    --accent-soft: #a78bfa;
+    --glass: rgba(20, 16, 40, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --text: #f8f7ff;
+    --muted: rgba(248, 247, 255, 0.65);
+    --radius: 18px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: #0b0a16;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Fundal fullscreen, fix în spatele tuturor paginilor */
+.bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(11, 10, 22, 0.45) 0%, rgba(11, 10, 22, 0.85) 100%),
+        url('../img/bg.jpg') center / cover no-repeat;
+}
+
+/* Antet transparent */
+.topbar {
+    padding: 18px 0;
+}
+.brand {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+}
+
+/* Carduri din sticlă */
+.card-ui {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    color: var(--text);
+}
+
+.page-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.muted {
+    color: var(--muted) !important;
+}
+
+/* Formulare pe fundal închis */
+.card-ui .form-label,
+.card-ui .form-check-label {
+    color: var(--text);
+}
+.card-ui .form-control,
+.card-ui .form-select {
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    border-radius: 12px;
+}
+.card-ui .form-control:focus,
+.card-ui .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-soft);
+    box-shadow: 0 0 0 0.2rem rgba(116, 50, 255, 0.25);
+    color: var(--text);
+}
+.card-ui .form-select option {
+    color: #111;
+}
+
+/* Butoane principale */
+.btn-accent {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(116, 50, 255, 0.35);
+    transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+}
+.btn-accent:hover {
+    color: #fff;
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px rgba(116, 50, 255, 0.45);
+}
+.btn-accent:disabled {
+    opacity: 0.55;
+    transform: none;
+}
+
+/* Butoane secundare, în tonul sticlei */
+.btn-outline-secondary,
+.btn-outline-danger,
+.btn-outline-light {
+    border-radius: 999px;
+    color: var(--text);
+    border-color: var(--glass-border);
+    background: rgba(255, 255, 255, 0.04);
+}
+.btn-outline-secondary:hover,
+.btn-outline-danger:hover,
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+/* Tabel în sticlă */
+.table-wrap {
+    max-height: 65vh;
+    overflow: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+.table-ui {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text);
+    --bs-table-border-color: rgba(255, 255, 255, 0.08);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.06);
+    margin-bottom: 0;
+}
+.table-ui thead th {
+    position: sticky;
+    top: 0;
+    background: rgba(20, 16, 40, 0.9);
+    color: var(--accent-soft);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    z-index: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.table-ui td {
+    padding: 12px 14px;
+    vertical-align: middle;
+}
+
+/* Alerte (mesajele flash) */
+.alert {
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--text);
+    border-radius: 14px;
+}
+
+/* Apariție blândă */
+.fade-in {
+    animation: fadeIn 0.6s ease both;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+}
